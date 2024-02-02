@@ -1,6 +1,7 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.shortcuts import HttpResponse
 from .models import LongToShort
+# from ip2geotools.databases.noncommercial import DbIpCity
 def home(request):
     form={
         "submitted":False,
@@ -36,9 +37,17 @@ def redirect_url(request,shorturl):
     if len(row) == 0:
         return HttpResponse("No such short url here")
     obj=row[0]
-    longurl=obj.longurl
+    longurl=obj.longurl 
 
     obj.clicks=obj.clicks+1
+    user_agent = request.META.get('HTTP_USER_AGENT', '').lower()
+
+    if 'mobile' in user_agent:
+       obj.mclicks=obj.mclicks+1
+    else:
+       # The request is from a laptop or desktop
+       obj.dclicks=obj.dclicks+1
+
     obj.save()
     return redirect(longurl)
 
@@ -47,8 +56,17 @@ def all_analytics(request):
     context={"row":row}
     return render(request,"all-analytics.html",context)
 
-def analytic(request):
-    # row = get_object_or_404(LongToShort)
-    row=LongToShort.objects.all()
-    context = {"row": row,}
-    return render(request,'analytics.html',context)
+def analytic(request, id):
+    pk= int(id)
+    # row=LongToShort.objects.all()
+    item_row = get_object_or_404(LongToShort, pk=pk)
+    context = {"item_row": item_row}
+    return render(request,'analytics.html', context)
+
+            # Testing the geo-agent function
+
+def get_location(request):
+    ip = get_client_ip(request)
+    response = DbIpCity.get(ip, api_key='free')
+    return HttpResponse('Request was made from: ' + response.country)
+   

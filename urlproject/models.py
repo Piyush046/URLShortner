@@ -5,3 +5,5 @@ class LongToShort(models.Model):
     shorturl=models.CharField(max_length=50,unique=True)
     date=models.DateField(auto_now_add=True)
     clicks=models.IntegerField(default=0)
+    dclicks=models.IntegerField(default=0)
+    mclicks=models.IntegerField(default=0)
