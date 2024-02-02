@@ -7,3 +7,9 @@ class LongToShort(models.Model):
     clicks=models.IntegerField(default=0)
     dclicks=models.IntegerField(default=0)
     mclicks=models.IntegerField(default=0)
+    country = models.CharField(max_length=100)
+    country_count = models.IntegerField(default=0)
+
+
+
+    

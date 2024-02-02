@@ -32,6 +32,10 @@
                         <div>Total clicks <strong class="allClicks">{{item_row.clicks}}</strong>
                             <p>Device Clicks : {{item_row.mclicks}}</p>
                             <p>desktop Clicks : {{item_row.dclicks}}</p>
+                            <!-- {% for item in all %}
+                            <p>{{ item.country }}</p>
+                            <p>{{item.country_count}}</p>
+                            {% endfor %} -->
                         </div>
                     </div>
                 </div>
@@ -48,6 +52,9 @@
                 </div>
             </div>
         </div>
+
+
+
     </main>
 </body>
 <script>
@@ -68,8 +75,8 @@
             }]
         }
     });
-    const desktop_count = "{{ desktop | safe }}";
-    const mobile_count = "{{ mobile | safe }}";
+    const desktop_count = "{{item_row.dclicks}}";
+    const mobile_count = "{{item_row.mclicks}}";
     const ctx2 = document.getElementById('donutChart').getContext('2d');
     const donutChart = new Chart(ctx2, {
         type: 'doughnut',
