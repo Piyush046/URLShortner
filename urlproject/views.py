@@ -1,7 +1,8 @@
 from django.shortcuts import render,redirect,get_object_or_404
 from django.shortcuts import HttpResponse
 from .models import LongToShort
-# from ip2geotools.databases.noncommercial import DbIpCity
+from ip2geotools.databases.noncommercial import DbIpCity
+# from django.shortcuts import get_client_ip
 def home(request):
     form={
         "submitted":False,
@@ -48,6 +49,19 @@ def redirect_url(request,shorturl):
        # The request is from a laptop or desktop
        obj.dclicks=obj.dclicks+1
 
+    ip = get_client_ip(request)
+    response = DbIpCity.get(ip, api_key='free')
+    c_obj = LongToShort.objects.filter(country=response.country)
+    # if c_obj.exists():
+    #     c_obj.country_count = c_obj.country_count + 1
+    # else :
+    #     obj.country = response.country
+    #     obj.country_count = obj.country_count + 1
+
+    # obj.country = response.country
+    # obj.country_count = obj.country_count + 1
+
+
     obj.save()
     return redirect(longurl)
 
@@ -58,15 +72,23 @@ def all_analytics(request):
 
 def analytic(request, id):
     pk= int(id)
-    # row=LongToShort.objects.all()
+    row=LongToShort.objects.all()
     item_row = get_object_or_404(LongToShort, pk=pk)
-    context = {"item_row": item_row}
+    context = {"item_row": item_row, "all":row}
+    # con = {"item_row": item_row}
+
     return render(request,'analytics.html', context)
 
             # Testing the geo-agent function
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
 
 def get_location(request):
-    ip = get_client_ip(request)
-    response = DbIpCity.get(ip, api_key='free')
+    response = DbIpCity.get(get_client_ip(request), api_key='free')
     return HttpResponse('Request was made from: ' + response.country)
    
