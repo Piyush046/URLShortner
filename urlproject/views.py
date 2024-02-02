@@ -47,8 +47,10 @@ def all_analytics(request):
     context={"row":row}
     return render(request,"all-analytics.html",context)
 
-def analytic(request):
-    # row = get_object_or_404(LongToShort)
-    row=LongToShort.objects.all()
-    context = {"row": row,}
-    return render(request,'analytics.html',context)
+def analytic(request, id):
+    pk= int(id)
+    # row=LongToShort.objects.all()
+    item_row = get_object_or_404(LongToShort, pk=pk)
+    context = {"item_row": item_row}
+    return render(request,'analytics.html', context)
+

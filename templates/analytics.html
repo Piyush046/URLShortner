@@ -20,16 +20,16 @@
                 <div class="col-12 page_log_in mt-0">
                     <h2 class="h1" style="text-align: center;">Link Analytics</h2>
                 </div>
-                
-                <div class="url_options url_stats_o" id="{{row.id}}">
-                    <p class="data_link">{{row.date}}</p>
-                    <p class="url_link"> {{row.longurl}}</p>
+
+                <div class="url_options url_stats_o" id="{{item_row.id}}">
+                    <p class="data_link">{{item_row.date}}</p>
+                    <p class="url_link"> {{item_row.longurl}}</p>
                     <p id="link" class="link_element">
                         <a href="analytics.html" class="short_url_l" target="_blank">
-                            {{row.shorturl}}</a>
+                            {{item_row.shorturl}}</a>
                     </p>
                     <div class="stats_total btn-cutt click_stats btn_norm">
-                        <div>Total clicks <strong class="allClicks">{{row.clicks}}</strong></div>
+                        <div>Total clicks <strong class="allClicks">{{item_row.clicks}}</strong></div>
                     </div>
                 </div>
             </div>
