@@ -75,8 +75,8 @@
             }]
         }
     });
-    const desktop_count = "{{ desktop | safe }}";
-    const mobile_count = "{{ mobile | safe }}";
+    const desktop_count = "{{item_row.dclicks}}";
+    const mobile_count = "{{item_row.mclicks}}";
     const ctx2 = document.getElementById('donutChart').getContext('2d');
     const donutChart = new Chart(ctx2, {
         type: 'doughnut',

@@ -49,11 +49,13 @@ def redirect_url(request,shorturl):
        # The request is from a laptop or desktop
        obj.dclicks=obj.dclicks+1
 
-    ip = get_client_ip(request)
-    response = DbIpCity.get(ip, api_key='free')
-    c_obj = LongToShort.objects.filter(country=response.country)
+    # ip = get_client_ip(request)
+    # response = DbIpCity.get(ip, api_key='free')
+    # c_obj = LongToShort.objects.filter(country=response.country)
     # if c_obj.exists():
-    #     c_obj.country_count = c_obj.country_count + 1
+    #     first = c_obj.first()
+    #     first.country_count = first.country_count + 1
+    #     first.save()
     # else :
     #     obj.country = response.country
     #     obj.country_count = obj.country_count + 1
