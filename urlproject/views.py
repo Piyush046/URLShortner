@@ -54,16 +54,16 @@ def redirect_url(request,shorturl):
 
     ip = get_client_ip(request)
     response = DbIpCity.get(ip, api_key='free')
-    c_obj = LongToShort.objects.filter(country=response.country)
-    if c_obj.exists():
-        first = c_obj.first()
-        first.country_count = first.country_count + 1
-        first.save()
-    else :
-        obj.country = response.country
-        obj.country_count = obj.country_count + 1
+    # c_obj = LongToShort.objects.filter(country=response.country)
+    # if c_obj.exists():
+    #     first = c_obj.first()
+    #     first.country_count = first.country_count + 1
+    #     first.save()
+    # else :
+    obj.country = response.country
+    obj.country_count = obj.country_count + 1
 
-        obj.save()
+    obj.save()
     return redirect(longurl)
 
 def all_analytics(request):
